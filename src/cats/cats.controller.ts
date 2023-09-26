@@ -10,7 +10,7 @@ export class CatsController {
     constructor(private catsService: CatsService) { }
 
     @Get()
-    findAll(): Cat[] {
+    findAll(): Promise<Cat[]> {
         return this.catsService.findAll();
     }
 
