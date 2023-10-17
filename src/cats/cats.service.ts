@@ -21,8 +21,8 @@ export class CatsService {
         this.cats.push(cat);
     }
 
-    findById(id: number): Cat {
-        return this.cats.find(cat => cat.id === id);
+    findById(id: number): Promise<Cat | null> {
+        return this.catsRepository.findOneBy({id});
     }
 
     findIndexById(id: number): number {

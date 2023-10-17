@@ -15,8 +15,8 @@ export class CatsController {
     }
 
     @Get(':id')
-    findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-        const gatoEncontrado = this.catsService.findById(id);
+    async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+        const gatoEncontrado = await this.catsService.findById(id);
         if (gatoEncontrado) {
             res.status(HttpStatus.OK).json(gatoEncontrado);
         } else {
