@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Res } from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { Cat } from './interfaces/cat.interface';
+// import { Cat } from './interfaces/cat.interface';
 import { Response } from 'express';
 import { CreateCatDto } from './dto/create-cat.dto';
+import { Cat } from './cat.entity';
 
 @Controller('cats')
 export class CatsController {
@@ -36,9 +37,9 @@ export class CatsController {
     }
 
     @Post()
-    create(@Body() createCatDto: CreateCatDto, @Res() res: Response) {
-        this.catsService.create(createCatDto);
-        res.status(HttpStatus.CREATED).json(createCatDto);
+    async create(@Body() dto: CreateCatDto, @Res() res: Response) {
+        const cat = await this.catsService.create(dto);
+        res.status(HttpStatus.CREATED).json(cat);
     }    
 
     @Put(':id')
