@@ -29,12 +29,12 @@ export class CatsService {
         return this.cats.findIndex(cat => cat.id === id);
     }
 
-    deleteByIndex(index: number): void {
-        this.cats.splice(index, 1);
-    }
-
     update(index: number, cat: Cat): void {
         this.cats.splice(index, 1, cat);
+    }
+
+    async remove(id: number): Promise<void> {
+        await this.catsRepository.delete(id);
     }
 
 }

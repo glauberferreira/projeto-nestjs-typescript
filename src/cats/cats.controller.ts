@@ -25,10 +25,10 @@ export class CatsController {
     }
 
     @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
-        const indexGatoEncontrado = this.catsService.findIndexById(id);
-        if (indexGatoEncontrado >= 0) {
-            this.catsService.deleteByIndex(indexGatoEncontrado);
+    async remove(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+        const gatoEncontrado = await this.catsService.findById(id);
+        if (gatoEncontrado) {
+            await this.catsService.remove(id);
             res.status(HttpStatus.NO_CONTENT).send();
         } else {
             res.status(HttpStatus.NOT_FOUND).send();
