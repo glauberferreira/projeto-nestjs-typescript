@@ -1,6 +1,6 @@
 import { IsAlpha, IsIn, IsNotEmpty, MinLength, NotEquals } from "class-validator";
 
-export class CreateCatDto {
+export class CreateOrUpdateCatDto {
     
     // id: number;
 

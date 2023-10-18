@@ -2,12 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Cat } from './cat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCatDto } from './dto/create-cat.dto';
+import { CreateOrUpdateCatDto } from './dto/create-cat.dto';
 
 @Injectable()
 export class CatsService {
-
-    private readonly cats: Cat[] = [];
 
     constructor(
         @InjectRepository(Cat)
@@ -18,7 +16,7 @@ export class CatsService {
         return this.catsRepository.find();
     }
 
-    create(dto: CreateCatDto): Promise<Cat> {
+    save(dto: CreateOrUpdateCatDto): Promise<Cat> {
         return this.catsRepository.save(dto);
     }
 
@@ -26,12 +24,8 @@ export class CatsService {
         return this.catsRepository.findOneBy({id});
     }
 
-    findIndexById(id: number): number {
-        return this.cats.findIndex(cat => cat.id === id);
-    }
-
-    update(index: number, cat: Cat): void {
-        this.cats.splice(index, 1, cat);
+    async update(id: number, dto: CreateOrUpdateCatDto): Promise<void> {
+        await this.catsRepository.update(id, dto);
     }
 
     async remove(id: number): Promise<void> {
